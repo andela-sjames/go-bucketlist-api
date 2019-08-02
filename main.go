@@ -11,6 +11,7 @@ import (
 
 // User field (Model) defined
 type User struct {
+	ID        string `json:"id"`
 	Username  string `json:"username"`
 	FirstName string `json:"first_name"`
 	LastNames string `json:"last_name"`
@@ -29,6 +30,7 @@ type Bucketlist struct {
 
 // BucketlistItem field (Model) defined
 type BucketlistItem struct {
+	ID         string      `json:"id"`
 	Name       string      `json:"name"`
 	Created    string      `json:"date_created"`
 	Modified   string      `json:"date_modified"`
