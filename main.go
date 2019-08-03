@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
+	_ "github.com/lib/pq"
 )
 
 const (
@@ -44,7 +45,7 @@ type BucketlistItem struct {
 	Created    string      `json:"date_created"`
 	Modified   string      `json:"date_modified"`
 	Done       bool        `json:"done"`
-	Bucketlist *Bucketlist `json:"bucketlist"`
+	Bucketlist *Bucketlist `json:"bucketlist,omitempty"`
 }
 
 // HomeHandler handles request to the base path and

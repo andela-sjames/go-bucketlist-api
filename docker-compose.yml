@@ -6,8 +6,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - PGPASSWORD=password
+      - PGPASSWORD=postgres
       - PGHOST=db
+    volumes:
+      - .:/app
     networks:
       - gorestapi
   db:
