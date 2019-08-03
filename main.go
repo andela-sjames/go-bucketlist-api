@@ -1,12 +1,21 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/mux"
+)
+
+const (
+	port   = 5432
+	user   = "postgres"
+	dbname = "postgres"
 )
 
 // User field (Model) defined
@@ -48,6 +57,26 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	password := os.Getenv("PGPASSWORD")
+	host := os.Getenv("PGHOST")
+
+	// setup DB connection
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	db, err := sql.Open("postgres", psqlInfo)
+
+	if err != nil {
+		panic(err)
+	}
+	defer db.Close()
+
+	err = db.Ping()
+	if err != nil {
+		panic(err)
+	}
+
+	log.Println("Successfully connected to DB!")
+
 	// Init Router
 	router := mux.NewRouter()
 
