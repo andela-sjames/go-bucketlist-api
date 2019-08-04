@@ -1,8 +1,9 @@
 package auth
 
 import (
-	"go-bucketlist-api/utils"
 	"net/http"
+
+	"github.com/andela-sjames/go-bucketlist-api/utils"
 )
 
 // JWTAuthenticationMiddleware defined to intercept request before passing
