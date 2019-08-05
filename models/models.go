@@ -14,30 +14,25 @@ import (
 // User field (Model) defined
 type User struct {
 	gorm.Model
-	ID        uint   `json:"id"`
-	Username  string `json:"username"`
+	UserName  string `json:"username"`
 	FirstName string `json:"first_name"`
 	LastNames string `json:"last_name"`
 	Email     string `json:"email"`
 	Password  string `json:"password"`
-	Token     string `json:"token";sql:"-"`
+	Token     string `json:"token"`
 }
 
 // Bucketlist field (Model) defined
 type Bucketlist struct {
-	ID       uint   `json:"id"`
-	Name     string `json:"name"`
-	Created  string `json:"date_created"`
-	Modified string `json:"date_modified"`
-	User     *User  `json:"user"`
+	gorm.Model
+	Name string `json:"name"`
+	User *User  `json:"user"`
 }
 
 // BucketlistItem field (Model) defined
 type BucketlistItem struct {
-	ID         uint        `json:"id"`
+	gorm.Model
 	Name       string      `json:"name"`
-	Created    string      `json:"date_created"`
-	Modified   string      `json:"date_modified"`
 	Done       bool        `json:"done"`
 	Bucketlist *Bucketlist `json:"bucketlist,omitempty"`
 }
@@ -93,7 +88,7 @@ func (user *User) Create() map[string]interface{} {
 	//Create new JWT token for the newly registered user
 	tk := &Token{UserID: user.ID}
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
-	tokenString, _ := token.SignedString([]byte(os.Getenv("token_password")))
+	tokenString, _ := token.SignedString([]byte(os.Getenv("PASSPHRASE")))
 	user.Token = tokenString
 
 	user.Password = "" //delete password
