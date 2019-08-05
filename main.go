@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/andela-sjames/go-bucketlist-api/auth"
 	"github.com/gorilla/mux"
 )
 
@@ -21,6 +22,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 func main() {
 	// Init Router
 	router := mux.NewRouter()
+
+	router.Use(auth.JWTAuthenticationMiddleware) //attach JWT auth middleware
 
 	// Route Handlers / Endpoints
 	router.HandleFunc("/", HomeHandler)
