@@ -1,8 +1,13 @@
 package auth
 
 import (
+	"context"
+	"fmt"
 	"net/http"
+	"os"
 	"strings"
+
+	jwt "github.com/dgrijalva/jwt-go"
 
 	"github.com/andela-sjames/go-bucketlist-api/models"
 	"github.com/andela-sjames/go-bucketlist-api/utils"
@@ -46,5 +51,34 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 
 		tokenPart := splitted[1] //Grab the token part, what we are truly interested in
 		tk := &models.Token{}
+
+		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
+			return []byte(os.Getenv("token_password")), nil
+		})
+
+		if err != nil { //Malformed token, returns with http code 403 as usual
+			response = utils.Message(false, "Malformed authentication token")
+			w.WriteHeader(http.StatusForbidden)
+			w.Header().Add("Content-Type", "application/json")
+			utils.Respond(w, response)
+			return
+		}
+
+		if !token.Valid { //Token is invalid, maybe not signed on this server
+			response = utils.Message(false, "Token is not valid.")
+			w.WriteHeader(http.StatusForbidden)
+			w.Header().Add("Content-Type", "application/json")
+			utils.Respond(w, response)
+			return
+		}
+
+		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
+		fmt.Println("User: ", tk.UserID) //Useful for monitoring
+		type userContextKey string
+		k := userContextKey("user")
+		ctx := context.WithValue(r.Context(), k, tk.UserID)
+		r = r.WithContext(ctx)
+		next.ServeHTTP(w, r) //proceed in the middleware chain!
+
 	})
 }
