@@ -8,9 +8,9 @@ services:
     environment:
       - PGPASSWORD=postgres
       - PGHOST=db
-      - PGPORT=5432
       - PGUSER=postgres
       - PGDBNAME=postgres
+      - PASSPHRASE=yetanotherbucketlistapp
     volumes:
       - .:/app
     networks:
@@ -23,3 +23,6 @@ services:
 
 networks:
   gorestapi:
+
+
+token_password = thisIsTheJwtSecretPassword //Do not commit to git!
