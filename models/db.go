@@ -29,6 +29,7 @@ func init() {
 	}
 
 	db = conn
+	defer db.Close()
 	db.Debug().AutoMigrate(&User{}, &Bucketlist{}, &BucketlistItem{})
 }
 
