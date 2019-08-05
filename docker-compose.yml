@@ -8,6 +8,9 @@ services:
     environment:
       - PGPASSWORD=postgres
       - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGDBNAME=postgres
     volumes:
       - .:/app
     networks:
