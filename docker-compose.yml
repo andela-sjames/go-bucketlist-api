@@ -23,6 +23,3 @@ services:
 
 networks:
   gorestapi:
-
-
-token_password = thisIsTheJwtSecretPassword //Do not commit to git!
