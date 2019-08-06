@@ -22,8 +22,8 @@ func main() {
 	router.HandleFunc("/", controllers.HomeHandler)
 
 	// Define API sub routes
-	userSubRoutes.HandleFunc("/signup", controllers.CreateUser).Methods("POST")
-	userSubRoutes.HandleFunc("/login", controllers.Authenticate).Methods("POST")
+	userSubRoutes.HandleFunc("/signup", controllers.CreateUserHandler).Methods("POST")
+	userSubRoutes.HandleFunc("/login", controllers.AuthenticateHandler).Methods("POST")
 
 	// server block defined here
 	srv := &http.Server{

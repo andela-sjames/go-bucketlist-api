@@ -8,8 +8,8 @@ import (
 	"github.com/andela-sjames/go-bucketlist-api/utils"
 )
 
-// CreateUser function defined to create new user
-func CreateUser(w http.ResponseWriter, r *http.Request) {
+// CreateUserHandler function defined to create new user
+func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	user := &models.User{}
 	err := json.NewDecoder(r.Body).Decode(user) //decode the request body into struct and failed if any error occur
@@ -22,8 +22,8 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	utils.Respond(w, resp)
 }
 
-// Authenticate function defined to authenticate new users
-var Authenticate = func(w http.ResponseWriter, r *http.Request) {
+// AuthenticateHandler function defined to authenticate new users
+func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
 
 	user := &models.User{}
 	err := json.NewDecoder(r.Body).Decode(user) //decode the request body into struct and failed if any error occur
