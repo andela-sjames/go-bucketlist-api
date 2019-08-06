@@ -14,27 +14,27 @@ import (
 // User field (Model) defined
 type User struct {
 	gorm.Model
-	UserName  string `json:"username"`
-	FirstName string `json:"first_name"`
-	LastNames string `json:"last_name"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
-	Token     string `json:"token"`
+	Email      string       `json:"email"`
+	Password   string       `json:"password"`
+	Token      string       `json:"token"`
+	Bucketlist []Bucketlist `json:"bucketlist,omitempty"`
 }
 
 // Bucketlist field (Model) defined
 type Bucketlist struct {
 	gorm.Model
-	Name string `json:"name"`
-	User *User  `json:"user"`
+	Name      string           `json:"name"`
+	CreatedBy string           `json:"created_by"`
+	UserID    uint             `json:"user_id"`
+	Item      []BucketlistItem `json:"item"`
 }
 
 // BucketlistItem field (Model) defined
 type BucketlistItem struct {
 	gorm.Model
-	Name       string      `json:"name"`
-	Done       bool        `json:"done"`
-	Bucketlist *Bucketlist `json:"bucketlist,omitempty"`
+	Name         string `json:"name"`
+	Done         bool   `json:"done"`
+	BucketlistID uint   `json:"bucketlist_id,omitempty"`
 }
 
 // Token JWT claims struct
