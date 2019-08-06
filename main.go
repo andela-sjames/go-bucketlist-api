@@ -13,11 +13,17 @@ import (
 func main() {
 	// Init Router
 	router := mux.NewRouter()
+	userSubRoutes := router.PathPrefix("/api/user").Subrouter()
 
-	router.Use(auth.JWTAuthenticationMiddleware) //attach JWT auth middleware
+	// attach JWT auth middleware
+	router.Use(auth.JWTAuthenticationMiddleware)
 
 	// Route Handlers / Endpoints
 	router.HandleFunc("/", controllers.HomeHandler)
+
+	// Define API sub routes
+	userSubRoutes.HandleFunc("/signup", controllers.CreateUser).Methods("POST")
+	userSubRoutes.HandleFunc("/login", controllers.Authenticate).Methods("POST")
 
 	// server block defined here
 	srv := &http.Server{
