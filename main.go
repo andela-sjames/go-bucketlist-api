@@ -1,23 +1,14 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 	"time"
 
 	"github.com/andela-sjames/go-bucketlist-api/auth"
+	"github.com/andela-sjames/go-bucketlist-api/controllers"
 	"github.com/gorilla/mux"
 )
-
-// HomeHandler handles request to the base path and
-// return a simple welcome text
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(map[string]string{
-		"status":  "200",
-		"message": "Welcome to Bucketlist API",
-	})
-}
 
 func main() {
 	// Init Router
@@ -26,7 +17,7 @@ func main() {
 	router.Use(auth.JWTAuthenticationMiddleware) //attach JWT auth middleware
 
 	// Route Handlers / Endpoints
-	router.HandleFunc("/", HomeHandler)
+	router.HandleFunc("/", controllers.HomeHandler)
 
 	// server block defined here
 	srv := &http.Server{
