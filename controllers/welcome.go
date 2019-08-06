@@ -11,5 +11,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(map[string]string{
 		"status":  "200",
 		"message": "Welcome to Bucketlist API",
+		"signup":  "/api/user/signup",
+		"login":   "/api/user/login",
 	})
 }
