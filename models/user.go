@@ -20,23 +20,6 @@ type User struct {
 	Bucketlist []Bucketlist `json:"bucketlist,omitempty"`
 }
 
-// Bucketlist field (Model) defined
-type Bucketlist struct {
-	gorm.Model
-	Name      string           `json:"name"`
-	CreatedBy string           `json:"created_by"`
-	UserID    uint             `json:"user_id"`
-	Item      []BucketlistItem `json:"item"`
-}
-
-// BucketlistItem field (Model) defined
-type BucketlistItem struct {
-	gorm.Model
-	Name         string `json:"name"`
-	Done         bool   `json:"done"`
-	BucketlistID uint   `json:"bucketlist_id,omitempty"`
-}
-
 // Token JWT claims struct
 type Token struct {
 	UserID uint

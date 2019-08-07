@@ -13,7 +13,8 @@ import (
 func main() {
 	// Init Router
 	router := mux.NewRouter()
-	userSubRoutes := router.PathPrefix("/api/user").Subrouter()
+	userSubRoutes := router.PathPrefix("/api/auth").Subrouter()
+	bucketlistSubRoutes := router.PathPrefix("/api/bucketlist").Subrouter()
 
 	// attach JWT auth middleware
 	router.Use(auth.JWTAuthenticationMiddleware)
@@ -24,6 +25,8 @@ func main() {
 	// Define API sub routes
 	userSubRoutes.HandleFunc("/signup", views.CreateUserHandler).Methods("POST")
 	userSubRoutes.HandleFunc("/login", views.AuthenticateHandler).Methods("POST")
+
+	bucketlistSubRoutes.HandleFunc("/", views.CreateBucketlistHandler).Methods("POST")
 
 	// server block defined here
 	srv := &http.Server{
