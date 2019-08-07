@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/andela-sjames/go-bucketlist-api/auth"
-	"github.com/andela-sjames/go-bucketlist-api/controllers"
+	"github.com/andela-sjames/go-bucketlist-api/views"
 	"github.com/gorilla/mux"
 )
 
@@ -19,11 +19,11 @@ func main() {
 	router.Use(auth.JWTAuthenticationMiddleware)
 
 	// Route Handlers / Endpoints
-	router.HandleFunc("/", controllers.HomeHandler)
+	router.HandleFunc("/", views.HomeHandler)
 
 	// Define API sub routes
-	userSubRoutes.HandleFunc("/signup", controllers.CreateUserHandler).Methods("POST")
-	userSubRoutes.HandleFunc("/login", controllers.AuthenticateHandler).Methods("POST")
+	userSubRoutes.HandleFunc("/signup", views.CreateUserHandler).Methods("POST")
+	userSubRoutes.HandleFunc("/login", views.AuthenticateHandler).Methods("POST")
 
 	// server block defined here
 	srv := &http.Server{

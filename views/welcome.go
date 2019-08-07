@@ -1,4 +1,4 @@
-package controllers
+package views
 
 import (
 	"encoding/json"
