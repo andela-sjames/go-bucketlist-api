@@ -15,7 +15,14 @@ type Bucketlist struct {
 }
 
 // Create a bucketlist function defined
-func (bklist *Bucketlist) Create() map[string]interface{} {
-	response := utils.Message(true, "user has been created")
+func (bucketlist *Bucketlist) Create() map[string]interface{} {
+
+	if bucketlist.Name == "" {
+		return utils.Message(false, "No input data provided")
+	}
+
+	GetDB().Create(bucketlist)
+	response := utils.Message(true, "bucketlist created")
+	response["bucketlist"] = bucketlist
 	return response
 }
