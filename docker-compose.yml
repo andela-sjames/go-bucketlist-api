@@ -1,5 +1,9 @@
 version: '3'
 
+volumes:
+  postgres_data: {}
+  postgres_backup: {}
+
 services:
   server:
     build: .
@@ -18,6 +22,11 @@ services:
   db:
     restart: always
     image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backup:/backups
+    ports:
+      - "8093:5432"
     networks:
       - gorestapi
 
