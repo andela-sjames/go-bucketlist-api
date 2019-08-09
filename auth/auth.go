@@ -13,6 +13,14 @@ import (
 	"github.com/andela-sjames/go-bucketlist-api/utils"
 )
 
+// RequestContextKey defined
+type RequestContextKey string
+
+const (
+	// CtxKey context defined
+	CtxKey RequestContextKey = "userObj"
+)
+
 // JWTAuthenticationMiddleware defined to intercept request before passing
 // to the next middleware or handler
 func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
@@ -74,17 +82,12 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 
 		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
 		fmt.Println("User: ", tk.UserID) //Useful for monitoring
-		type requestContextKey string
-		userObj := requestContextKey("userObj")
 
 		userClaimContextValue := make(map[string]interface{})
 		userClaimContextValue["userID"] = tk.UserID
 		userClaimContextValue["userEmail"] = tk.Email
 
-		ctxKey := context.WithValue(r.Context(), userObj, userClaimContextValue)
-
-		r = r.WithContext(ctxKey)
-		next.ServeHTTP(w, r) //proceed in the middleware chain!
-
+		reqCtxKey := context.WithValue(r.Context(), CtxKey, userClaimContextValue)
+		next.ServeHTTP(w, r.WithContext(reqCtxKey)) //proceed in the middleware chain!
 	})
 }

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/andela-sjames/go-bucketlist-api/auth"
 	"github.com/andela-sjames/go-bucketlist-api/models"
 	"github.com/andela-sjames/go-bucketlist-api/utils"
 )
@@ -12,7 +13,7 @@ import (
 // CreateBucketlistHandler function defined to create new user
 func CreateBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 
-	userObj := r.Context().Value("userObj").(map[string]interface{}) //Grab the userObj of the user that send the request
+	userObj := r.Context().Value(auth.CtxKey).(map[string]interface{}) //Grab the userObj of the user that send the request
 
 	bucketlist := &models.Bucketlist{}
 	err := json.NewDecoder(r.Body).Decode(bucketlist) //decode the request body into struct and fail if any error occur

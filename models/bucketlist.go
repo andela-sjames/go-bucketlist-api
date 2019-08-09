@@ -3,7 +3,6 @@ package models
 import (
 	"github.com/andela-sjames/go-bucketlist-api/utils"
 	"github.com/jinzhu/gorm"
-	"github.com/pborman/uuid"
 )
 
 // Bucketlist field (Model) defined
@@ -26,12 +25,4 @@ func (bucketlist *Bucketlist) Create() map[string]interface{} {
 	response := utils.Message(true, "bucketlist created")
 	response["bucketlist"] = bucketlist
 	return response
-}
-
-// BeforeCreate hook defined for bucketlist
-func (bucketlist *Bucketlist) BeforeCreate(scope *gorm.Scope) error {
-	// update CreatedBy here with user name from the request context
-	// https://golang.org/pkg/context/#example_WithValue
-	scope.SetColumn("ID", uuid.New())
-	return nil
 }
