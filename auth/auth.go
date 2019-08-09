@@ -53,7 +53,7 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 		tk := &models.Token{}
 
 		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
-			return []byte(os.Getenv("token_password")), nil
+			return []byte(os.Getenv("PASSPHRASE")), nil
 		})
 
 		if err != nil { //Malformed token, returns with http code 403 as usual
@@ -74,10 +74,17 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 
 		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
 		fmt.Println("User: ", tk.UserID) //Useful for monitoring
-		type userContextKey string
-		k := userContextKey("user")
-		ctx := context.WithValue(r.Context(), k, tk.UserID)
-		r = r.WithContext(ctx)
+		type userIDContextKey string
+		userID := userIDContextKey("userID")
+
+		type userEmailContextKey string
+		userEmail := userEmailContextKey("userEmail")
+
+		ctxID := context.WithValue(r.Context(), userID, tk.UserID)
+		ctxEmail := context.WithValue(r.Context(), userEmail, tk.Email)
+
+		r = r.WithContext(ctxID)
+		r = r.WithContext(ctxEmail)
 		next.ServeHTTP(w, r) //proceed in the middleware chain!
 
 	})

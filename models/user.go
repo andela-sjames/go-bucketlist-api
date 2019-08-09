@@ -23,6 +23,7 @@ type User struct {
 // Token JWT claims struct
 type Token struct {
 	UserID uint
+	Email  string
 	jwt.StandardClaims
 }
 
@@ -101,7 +102,7 @@ func Login(email, password string) map[string]interface{} {
 	user.Password = ""
 
 	//Create JWT token
-	tk := &Token{UserID: user.ID}
+	tk := &Token{UserID: user.ID, Email: email}
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
 	tokenString, _ := token.SignedString([]byte(os.Getenv("PASSPHRASE")))
 	user.Token = tokenString //Store the token in the response
