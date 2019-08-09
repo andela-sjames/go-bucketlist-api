@@ -2,6 +2,7 @@ package views
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/andela-sjames/go-bucketlist-api/models"
@@ -11,8 +12,7 @@ import (
 // CreateBucketlistHandler function defined to create new user
 func CreateBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 
-	UserID := r.Context().Value("UserID").(uint)         //Grab the id of the user that send the request
-	userEmail := r.Context().Value("userEmail").(string) //Grab the email of the user that send the request
+	userObj := r.Context().Value("userObj") //Grab the userObj of the user that send the request
 
 	bucketlist := &models.Bucketlist{}
 	err := json.NewDecoder(r.Body).Decode(bucketlist) //decode the request body into struct and fail if any error occur
@@ -21,8 +21,10 @@ func CreateBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	bucketlist.UserID = UserID
-	bucketlist.CreatedBy = userEmail
+	fmt.Println("userObj:", userObj)
+
+	bucketlist.UserID = userObj
+	// bucketlist.CreatedBy = userObj
 	resp := bucketlist.Create() //Create user
 	utils.Respond(w, resp)
 }

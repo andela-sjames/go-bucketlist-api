@@ -74,17 +74,16 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 
 		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
 		fmt.Println("User: ", tk.UserID) //Useful for monitoring
-		type userIDContextKey string
-		userID := userIDContextKey("userID")
+		type requestContextKey string
+		userObj := requestContextKey("userObj")
 
-		type userEmailContextKey string
-		userEmail := userEmailContextKey("userEmail")
+		userClaimContextValue := make(map[string]interface{})
+		userClaimContextValue["userID"] = tk.UserID
+		userClaimContextValue["userEmail"] = tk.Email
 
-		ctxID := context.WithValue(r.Context(), userID, tk.UserID)
-		ctxEmail := context.WithValue(r.Context(), userEmail, tk.Email)
+		ctxKey := context.WithValue(r.Context(), userObj, userClaimContextValue)
 
-		r = r.WithContext(ctxID)
-		r = r.WithContext(ctxEmail)
+		r = r.WithContext(ctxKey)
 		next.ServeHTTP(w, r) //proceed in the middleware chain!
 
 	})

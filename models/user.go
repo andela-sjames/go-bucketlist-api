@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -56,6 +57,7 @@ func (user *User) Validate() (map[string]interface{}, bool) {
 // Create a user object
 func (user *User) Create() map[string]interface{} {
 
+	fmt.Println(user, "the user object")
 	if resp, ok := user.Validate(); !ok {
 		return resp
 	}
