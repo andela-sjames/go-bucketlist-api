@@ -13,6 +13,7 @@ import (
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	user := &models.User{}
+	fmt.Println(r.Body, "Body =====>>><<<=====")
 	err := json.NewDecoder(r.Body).Decode(user) //decode the request body into struct and failed if any error occur
 	if err != nil {
 		fmt.Println("Debug user CreateUserHandler:", err)
