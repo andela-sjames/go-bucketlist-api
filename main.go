@@ -27,6 +27,7 @@ func main() {
 	userSubRoutes.HandleFunc("/login", views.AuthenticateHandler).Methods("POST")
 
 	bucketlistSubRoutes.HandleFunc("/", views.CreateBucketlistHandler).Methods("POST")
+	bucketlistSubRoutes.HandleFunc("/", views.GetAllBucketlistHandler).Methods("GET")
 
 	// server block defined here
 	srv := &http.Server{

@@ -81,7 +81,7 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 		}
 
 		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
-		fmt.Println("User: ", tk.UserID) //Useful for monitoring
+		fmt.Println("User: ", tk.UserID, tk.Email) //Useful for monitoring
 
 		userClaimContextValue := make(map[string]interface{})
 		userClaimContextValue["userID"] = tk.UserID

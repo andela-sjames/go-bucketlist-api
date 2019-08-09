@@ -2,7 +2,6 @@ package views
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/andela-sjames/go-bucketlist-api/auth"
@@ -10,7 +9,7 @@ import (
 	"github.com/andela-sjames/go-bucketlist-api/utils"
 )
 
-// CreateBucketlistHandler function defined to create new user
+// CreateBucketlistHandler function defined to create a new bucketlist
 func CreateBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 
 	userObj := r.Context().Value(auth.CtxKey).(map[string]interface{}) //Grab the userObj of the user that send the request
@@ -22,13 +21,22 @@ func CreateBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("userObj:", userObj)
-
 	userID := userObj["userID"].(uint)
 	userEmail := userObj["userEmail"].(string)
 
 	bucketlist.UserID = userID
 	bucketlist.CreatedBy = userEmail
 	resp := bucketlist.Create() //Create user
+	utils.Respond(w, resp)
+}
+
+// GetAllBucketlistHandler function defined to list all bucketlist
+func GetAllBucketlistHandler(w http.ResponseWriter, r *http.Request) {
+
+	bucketlist := &models.Bucketlist{}
+	models.GetDB().Find(&bucketlist)
+
+	resp := utils.Message(true, "Fetch complete")
+	resp["bucketlist"] = bucketlist
 	utils.Respond(w, resp)
 }
