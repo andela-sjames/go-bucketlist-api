@@ -30,8 +30,20 @@ func CreateBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 	utils.Respond(w, resp)
 }
 
-// GetAllBucketlistHandler function defined to list all bucketlist
+// GetAllBucketlistHandler function defined to list all bucketlist for a
+// specific user
 func GetAllBucketlistHandler(w http.ResponseWriter, r *http.Request) {
+
+	userObj := r.Context().Value(auth.CtxKey).(map[string]interface{})
+	data := models.GetAllBucketlist(userObj["userID"].(uint))
+
+	resp := utils.Message(true, "success")
+	resp["data"] = data
+	utils.Respond(w, resp)
+}
+
+// GetBucketlistHandler function defined to get a single bucketlist
+func GetBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 
 	bucketlist := &models.Bucketlist{}
 	models.GetDB().Find(&bucketlist)
