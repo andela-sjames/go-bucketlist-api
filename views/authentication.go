@@ -13,7 +13,7 @@ import (
 func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	user := &models.User{}
-	err := json.NewDecoder(r.Body).Decode(user) //decode the request body into struct and failed if any error occur
+	err := json.NewDecoder(r.Body).Decode(user) //decode the request body into struct and fail if any error occur
 	if err != nil {
 		fmt.Println("Debug user CreateUserHandler:", err)
 		utils.Respond(w, utils.Message(false, "Invalid request"))
@@ -28,7 +28,7 @@ func CreateUserHandler(w http.ResponseWriter, r *http.Request) {
 func AuthenticateHandler(w http.ResponseWriter, r *http.Request) {
 
 	user := &models.User{}
-	err := json.NewDecoder(r.Body).Decode(user) //decode the request body into struct and failed if any error occur
+	err := json.NewDecoder(r.Body).Decode(user) //decode the request body into struct and fail if any error occur
 	if err != nil {
 		fmt.Println("Debug user AuthenticateHandler:", err)
 		utils.Respond(w, utils.Message(false, "Invalid request"))
