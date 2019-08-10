@@ -3,6 +3,9 @@ package views
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 
 	"github.com/andela-sjames/go-bucketlist-api/auth"
 	"github.com/andela-sjames/go-bucketlist-api/models"
@@ -42,13 +45,20 @@ func GetAllBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 	utils.Respond(w, resp)
 }
 
-// GetBucketlistHandler function defined to get a single bucketlist
-func GetBucketlistHandler(w http.ResponseWriter, r *http.Request) {
+// GetBucketByIDlistHandler function defined to get a single bucketlist
+func GetBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 
-	bucketlist := &models.Bucketlist{}
-	models.GetDB().Find(&bucketlist)
+	params := mux.Vars(r)
+	id, err := strconv.Atoi(params["id"])
 
-	resp := utils.Message(true, "Fetch complete")
-	resp["bucketlist"] = bucketlist
+	if err != nil {
+		// The passed path parameter is not an integer
+		utils.Respond(w, utils.Message(false, "There was an error in your request"))
+		return
+	}
+
+	data := models.GetBucketlist(uint(id))
+	resp := utils.Message(true, "success")
+	resp["data"] = data
 	utils.Respond(w, resp)
 }
