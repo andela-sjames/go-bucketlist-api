@@ -39,6 +39,7 @@ func main() {
 	// itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.DeleteItemHandler).Methods("DELETE")
 
 	// TODO: Paginate the get routes.
+	// TODO: Fix associations.
 
 	// server block defined here
 	srv := &http.Server{
