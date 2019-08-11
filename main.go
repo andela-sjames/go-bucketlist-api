@@ -15,7 +15,7 @@ func main() {
 	router := mux.NewRouter()
 	userSubRoutes := router.PathPrefix("/api/auth").Subrouter()
 	bucketlistSubRoutes := router.PathPrefix("/api/bucketlist").Subrouter()
-	// itemSubRoutes := router.PathPrefix("/api/bucketlist/{id:[0-9]+}/items").Subrouter()
+	itemSubRoutes := router.PathPrefix("/api/bucketlist/{id:[0-9]+}/items").Subrouter()
 
 	// attach JWT auth middleware
 	router.Use(auth.JWTAuthenticationMiddleware)
@@ -34,7 +34,7 @@ func main() {
 	// bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.UpdateBucketByIDlistHandler).Methods("PUT")
 	// bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.DeleteBucketByIDlistHandler).Methods("DELETE")
 
-	// itemSubRoutes.HandleFunc("/", views.CreateItemHandler).Methods("POST")
+	itemSubRoutes.HandleFunc("/", views.CreateItemHandler).Methods("POST")
 	// itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.UpdateItemHandler).Methods("PUT")
 	// itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.DeleteItemHandler).Methods("DELETE")
 

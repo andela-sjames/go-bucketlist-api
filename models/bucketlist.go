@@ -38,17 +38,20 @@ func GetAllBucketlist(user uint) []*Bucketlist {
 		fmt.Println(err)
 		return nil
 	}
-
 	return bucketlists
+
+	// // find all associations
+	// return GetDB().Model(&bucketlists).Association("Item")
+
 }
 
 // GetBucketlist by ID function defined
 func GetBucketlist(id uint) *Bucketlist {
 
-	bucketlists := &Bucketlist{}
-	err := GetDB().Table("bucketlists").Where("id = ?", id).First(bucketlists).Error
+	bucketlist := &Bucketlist{}
+	err := GetDB().Table("bucketlists").Where("id = ?", id).First(bucketlist).Error
 	if err != nil {
 		return nil
 	}
-	return bucketlists
+	return bucketlist
 }

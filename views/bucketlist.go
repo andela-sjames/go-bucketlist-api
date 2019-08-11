@@ -29,7 +29,7 @@ func CreateBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 
 	bucketlist.UserID = userID
 	bucketlist.CreatedBy = userEmail
-	resp := bucketlist.Create() //Create user
+	resp := bucketlist.Create() //Create bucketlist
 	utils.Respond(w, resp)
 }
 
@@ -48,8 +48,8 @@ func GetAllBucketlistHandler(w http.ResponseWriter, r *http.Request) {
 // GetBucketByIDlistHandler function defined to get a single bucketlist
 func GetBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 
-	params := mux.Vars(r)
-	id, err := strconv.Atoi(params["id"])
+	requestParams := mux.Vars(r)
+	id, err := strconv.Atoi(requestParams["id"])
 
 	if err != nil {
 		// The passed path parameter is not an integer
