@@ -30,7 +30,7 @@ func (bucketlistItem *BucketlistItem) Create() map[string]interface{} {
 func GetBucketItem(id uint) *BucketlistItem {
 
 	bucketlistItem := &BucketlistItem{}
-	err := GetDB().Table("bucketlistitems").Where("id = ?", id).First(bucketlistItem).Error
+	err := GetDB().Table("bucketlist_items").Where("id = ?", id).First(bucketlistItem).Error
 	if err != nil {
 		return nil
 	}
@@ -42,7 +42,7 @@ func GetBucketItem(id uint) *BucketlistItem {
 func UpdateBucketItem(id uint, name string, done bool) *BucketlistItem {
 	bucketlistItem := &BucketlistItem{}
 
-	err := GetDB().Table("bucketlistitems").Where("id = ?", id).First(bucketlistItem).Error
+	err := GetDB().Table("bucketlist_items").Where("id = ?", id).First(bucketlistItem).Error
 	if err != nil {
 		return nil
 	}

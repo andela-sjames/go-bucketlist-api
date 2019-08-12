@@ -76,9 +76,20 @@ func UpdateItemHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if item.BucketlistID == bucketlist.ID {
-		data := models.UpdateBucketItem(uint(id), item.Name, item.Done)
+		bucketlistItem := &models.BucketlistItem{}
+		decodeErr := json.NewDecoder(r.Body).Decode(bucketlistItem)
+
+		if decodeErr != nil {
+			// The passed path parameter is not an integer
+			utils.Respond(w, utils.Message(false, "There was an error in your request body"))
+			return
+		}
+
+		data := models.UpdateBucketItem(uint(itemID), bucketlistItem.Name, bucketlistItem.Done)
 		resp := utils.Message(true, "success")
 		resp["data"] = data
 		utils.Respond(w, resp)
+	} else {
+		utils.Respond(w, utils.Message(false, "bucketlist-items mistatch error"))
 	}
 }
