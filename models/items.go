@@ -25,3 +25,28 @@ func (bucketlistItem *BucketlistItem) Create() map[string]interface{} {
 	response["bucketlistItem"] = bucketlistItem
 	return response
 }
+
+// GetBucketItem by ID function defined
+func GetBucketItem(id uint) *BucketlistItem {
+
+	bucketlistItem := &BucketlistItem{}
+	err := GetDB().Table("bucketlistitems").Where("id = ?", id).First(bucketlistItem).Error
+	if err != nil {
+		return nil
+	}
+
+	return bucketlistItem
+}
+
+// UpdateBucketItem by ID functio  defined
+func UpdateBucketItem(id uint, name string, done bool) *BucketlistItem {
+	bucketlistItem := &BucketlistItem{}
+
+	err := GetDB().Table("bucketlistitems").Where("id = ?", id).First(bucketlistItem).Error
+	if err != nil {
+		return nil
+	}
+
+	GetDB().Model(&bucketlistItem).Update(BucketlistItem{Name: name, Done: done})
+	return bucketlistItem
+}

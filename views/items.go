@@ -11,7 +11,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// CreateItemHandler function defined to create a new bucketlist
+// CreateItemHandler function defined to create a new bucketlist item
 func CreateItemHandler(w http.ResponseWriter, r *http.Request) {
 
 	requestParams := mux.Vars(r)
@@ -42,4 +42,43 @@ func CreateItemHandler(w http.ResponseWriter, r *http.Request) {
 	resp := bucketlistItem.Create()
 
 	utils.Respond(w, resp)
+}
+
+// UpdateItemHandler function defined to update an item
+func UpdateItemHandler(w http.ResponseWriter, r *http.Request) {
+	requestParams := mux.Vars(r)
+	id, errID := strconv.Atoi(requestParams["id"])
+	itemID, erritemID := strconv.Atoi(requestParams["itemID"])
+
+	if errID != nil {
+		// The passed path parameter is not an integer
+		utils.Respond(w, utils.Message(false, "There was an error in your request, bucketlist id missing"))
+		return
+	}
+
+	if erritemID != nil {
+		// The passed path parameter is not an integer
+		utils.Respond(w, utils.Message(false, "There was an error in your request, item id missing"))
+		return
+	}
+
+	bucketlist := models.GetBucketlist(uint(id))
+
+	if bucketlist == nil {
+		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucket list with id: %d was not found", id)))
+	}
+
+	// get item by id
+	item := models.GetBucketItem(uint(itemID))
+
+	if item == nil {
+		utils.Respond(w, utils.Message(false, fmt.Sprintf("item with id: %d was not found", itemID)))
+	}
+
+	if item.BucketlistID == bucketlist.ID {
+		data := models.UpdateBucketItem(uint(id), item.Name, item.Done)
+		resp := utils.Message(true, "success")
+		resp["data"] = data
+		utils.Respond(w, resp)
+	}
 }
