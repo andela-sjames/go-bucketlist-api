@@ -31,7 +31,7 @@ func main() {
 	bucketlistSubRoutes.HandleFunc("/", views.GetAllBucketlistHandler).Methods("GET")
 
 	bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.GetBucketByIDlistHandler).Methods("GET")
-	// bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.UpdateBucketByIDlistHandler).Methods("PUT")
+	bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.UpdateBucketByIDlistHandler).Methods("PUT")
 	// bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.DeleteBucketByIDlistHandler).Methods("DELETE")
 
 	itemSubRoutes.HandleFunc("/", views.CreateItemHandler).Methods("POST")
@@ -39,7 +39,6 @@ func main() {
 	// itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.DeleteItemHandler).Methods("DELETE")
 
 	// TODO: Paginate the get routes.
-	// TODO: Fix associations.
 
 	// server block defined here
 	srv := &http.Server{

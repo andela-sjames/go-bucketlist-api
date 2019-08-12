@@ -53,3 +53,16 @@ func GetBucketlist(id uint) *Bucketlist {
 	GetDB().Model(&bucketlist).Association("Item").Find(&bucketlist.Item)
 	return bucketlist
 }
+
+// UpdateBucketlist by ID functio  defined
+func UpdateBucketlist(id uint, name string) *Bucketlist {
+	bucketlist := &Bucketlist{}
+
+	err := GetDB().Table("bucketlists").Where("id = ?", id).First(bucketlist).Error
+	if err != nil {
+		return nil
+	}
+
+	GetDB().Model(&bucketlist).Update("name", name)
+	return bucketlist
+}

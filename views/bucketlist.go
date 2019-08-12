@@ -62,3 +62,23 @@ func GetBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 	resp["data"] = data
 	utils.Respond(w, resp)
 }
+
+// UpdateBucketByIDlistHandler function defined to get a single bucketlist
+func UpdateBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
+	requestParams := mux.Vars(r)
+	id, err := strconv.Atoi(requestParams["id"])
+
+	if err != nil {
+		// The passed path parameter is not an integer
+		utils.Respond(w, utils.Message(false, "There was an error in your request"))
+		return
+	}
+
+	bucketlist := &models.Bucketlist{}
+	json.NewDecoder(r.Body).Decode(bucketlist)
+
+	data := models.UpdateBucketlist(uint(id), bucketlist.Name)
+	resp := utils.Message(true, "success")
+	resp["data"] = data
+	utils.Respond(w, resp)
+}
