@@ -39,10 +39,6 @@ func GetAllBucketlist(user uint) []*Bucketlist {
 		return nil
 	}
 	return bucketlists
-
-	// // find all associations
-	// return GetDB().Model(&bucketlists).Association("Item")
-
 }
 
 // GetBucketlist by ID function defined
@@ -53,5 +49,7 @@ func GetBucketlist(id uint) *Bucketlist {
 	if err != nil {
 		return nil
 	}
+
+	GetDB().Model(&bucketlist).Association("Item").Find(&bucketlist.Item)
 	return bucketlist
 }
