@@ -65,7 +65,8 @@ func UpdateDeleteItemHandler(w http.ResponseWriter, r *http.Request) {
 	bucketlist := models.GetBucketlist(uint(id))
 
 	if bucketlist == nil {
-		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucket list with id: %d was not found", id)))
+		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucketlist with id: %d was not found", id)))
+		return
 	}
 
 	// get item by id

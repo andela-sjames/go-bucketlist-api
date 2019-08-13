@@ -61,7 +61,7 @@ func GetBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 	data := models.GetBucketlist(uint(id))
 
 	if data == nil {
-		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucket list with id: %d was not found", id)))
+		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucketlist with id: %d was not found", id)))
 		return
 	}
 	resp := utils.Message(true, "success")
@@ -84,6 +84,10 @@ func UpdateBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(bucketlist)
 
 	data := models.UpdateBucketlist(uint(id), bucketlist.Name)
+	if data == nil {
+		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucketlist with id: %d was not found", id)))
+		return
+	}
 	resp := utils.Message(true, "success")
 	resp["data"] = data
 	utils.Respond(w, resp)

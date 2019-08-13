@@ -46,7 +46,7 @@ func GetBucketlist(id uint) *Bucketlist {
 
 	bucketlist := &Bucketlist{}
 	err := GetDB().Table("bucketlists").Where("id = ?", id).First(bucketlist).Error
-	if err != nil && err == gorm.ErrRecordNotFound {
+	if err != nil || err == gorm.ErrRecordNotFound {
 		return nil
 	}
 
@@ -59,7 +59,7 @@ func UpdateBucketlist(id uint, name string) *Bucketlist {
 	bucketlist := &Bucketlist{}
 
 	err := GetDB().Table("bucketlists").Where("id = ?", id).First(bucketlist).Error
-	if err != nil {
+	if err != nil || err == gorm.ErrRecordNotFound {
 		return nil
 	}
 
