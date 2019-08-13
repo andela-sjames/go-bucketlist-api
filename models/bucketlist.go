@@ -66,3 +66,9 @@ func UpdateBucketlist(id uint, name string) *Bucketlist {
 	GetDB().Model(&bucketlist).Update("name", name)
 	return bucketlist
 }
+
+// AfterDelete hook defined for cascade delete
+func (bucketlist *Bucketlist) AfterDelete(tx *gorm.DB) (err error) {
+	tx.Model(&BucketlistItem{}).Where("bucketlist_id = ?", bucketlist.ID).Unscoped().Delete(&BucketlistItem{})
+	return
+}
