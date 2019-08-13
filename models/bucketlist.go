@@ -13,7 +13,7 @@ type Bucketlist struct {
 	Name      string           `json:"name"`
 	CreatedBy string           `json:"created_by"`
 	UserID    uint             `json:"user_id"`
-	Item      []BucketlistItem `json:"item"`
+	Item      []BucketlistItem `json:"item,omitempty"`
 }
 
 // Create a bucketlist function defined
