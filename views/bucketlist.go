@@ -69,8 +69,8 @@ func GetBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 	utils.Respond(w, resp)
 }
 
-// UpdateBucketByIDlistHandler function defined to get a single bucketlist
-func UpdateBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
+// UpdateDeleteBucketByIDlistHandler function defined to get a single bucketlist
+func UpdateDeleteBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 	requestParams := mux.Vars(r)
 	id, err := strconv.Atoi(requestParams["id"])
 
@@ -83,12 +83,19 @@ func UpdateBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 	bucketlist := &models.Bucketlist{}
 	json.NewDecoder(r.Body).Decode(bucketlist)
 
-	data := models.UpdateBucketlist(uint(id), bucketlist.Name)
-	if data == nil {
-		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucketlist with id: %d was not found", id)))
-		return
+	switch r.Method {
+	case "PUT":
+		data := models.UpdateBucketlist(uint(id), bucketlist.Name)
+		if data == nil {
+			utils.Respond(w, utils.Message(false, fmt.Sprintf("bucketlist with id: %d was not found", id)))
+			return
+		}
+		resp := utils.Message(true, "success")
+		resp["data"] = data
+		utils.Respond(w, resp)
+
+	case "DELETE":
+		// DELETE HERE
 	}
-	resp := utils.Message(true, "success")
-	resp["data"] = data
-	utils.Respond(w, resp)
+
 }
