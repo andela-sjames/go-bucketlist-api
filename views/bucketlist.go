@@ -96,6 +96,11 @@ func UpdateDeleteBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 
 	case "DELETE":
 		// DELETE HERE
+		bucketlist := models.GetBucketlist(uint(id))
+		models.GetDB().Unscoped().Delete(&bucketlist)
+		resp := utils.Message(true, "success")
+		utils.Respond(w, resp)
+
 	}
 
 }
