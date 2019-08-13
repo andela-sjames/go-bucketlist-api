@@ -2,6 +2,7 @@ package views
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -58,6 +59,11 @@ func GetBucketByIDlistHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := models.GetBucketlist(uint(id))
+
+	if data == nil {
+		utils.Respond(w, utils.Message(false, fmt.Sprintf("bucket list with id: %d was not found", id)))
+		return
+	}
 	resp := utils.Message(true, "success")
 	resp["data"] = data
 	utils.Respond(w, resp)

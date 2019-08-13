@@ -35,8 +35,7 @@ func main() {
 	// bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.DeleteBucketByIDlistHandler).Methods("DELETE")
 
 	itemSubRoutes.HandleFunc("/", views.CreateItemHandler).Methods("POST")
-	itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.UpdateItemHandler).Methods("PUT")
-	// itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.DeleteItemHandler).Methods("DELETE")
+	itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.UpdateDeleteItemHandler).Methods("PUT", "DELETE")
 
 	// TODO: Paginate the get routes.
 

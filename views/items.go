@@ -44,8 +44,8 @@ func CreateItemHandler(w http.ResponseWriter, r *http.Request) {
 	utils.Respond(w, resp)
 }
 
-// UpdateItemHandler function defined to update an item
-func UpdateItemHandler(w http.ResponseWriter, r *http.Request) {
+// UpdateDeleteItemHandler function defined to update an item
+func UpdateDeleteItemHandler(w http.ResponseWriter, r *http.Request) {
 	requestParams := mux.Vars(r)
 	id, errID := strconv.Atoi(requestParams["id"])
 	itemID, erritemID := strconv.Atoi(requestParams["itemID"])
@@ -73,23 +73,32 @@ func UpdateItemHandler(w http.ResponseWriter, r *http.Request) {
 
 	if item == nil {
 		utils.Respond(w, utils.Message(false, fmt.Sprintf("item with id: %d was not found", itemID)))
+		return
 	}
 
 	if item.BucketlistID == bucketlist.ID {
-		bucketlistItem := &models.BucketlistItem{}
-		decodeErr := json.NewDecoder(r.Body).Decode(bucketlistItem)
+		switch r.Method {
+		case "PUT":
+			bucketlistItem := &models.BucketlistItem{}
+			decodeErr := json.NewDecoder(r.Body).Decode(bucketlistItem)
 
-		if decodeErr != nil {
-			// The passed path parameter is not an integer
-			utils.Respond(w, utils.Message(false, "There was an error in your request body"))
-			return
+			if decodeErr != nil {
+				// The passed path parameter is not an integer
+				utils.Respond(w, utils.Message(false, "There was an error in your request body"))
+				return
+			}
+
+			data := models.UpdateBucketItem(uint(itemID), bucketlistItem.Name, bucketlistItem.Done)
+			resp := utils.Message(true, "success")
+			resp["data"] = data
+			utils.Respond(w, resp)
+		case "DELETE":
+			models.GetDB().Unscoped().Delete(&item)
+			resp := utils.Message(true, "success")
+			utils.Respond(w, resp)
 		}
-
-		data := models.UpdateBucketItem(uint(itemID), bucketlistItem.Name, bucketlistItem.Done)
-		resp := utils.Message(true, "success")
-		resp["data"] = data
-		utils.Respond(w, resp)
 	} else {
 		utils.Respond(w, utils.Message(false, "bucketlist-items mistatch error"))
+		return
 	}
 }
