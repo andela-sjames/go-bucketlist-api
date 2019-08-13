@@ -37,6 +37,7 @@ func main() {
 	itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.UpdateDeleteItemHandler).Methods("PUT", "DELETE")
 
 	// TODO: Paginate the get routes.
+	// TODO: expire jwt token after 24hours.
 
 	// server block defined here
 	srv := &http.Server{
