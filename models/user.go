@@ -74,7 +74,7 @@ func (user *User) Create() map[string]interface{} {
 
 	//Create new JWT token for the newly registered user
 	expirationTime := time.Now().Add(24 * time.Hour)
-	tk := &Token{
+	claims := &Token{
 		user.ID,
 		user.Email,
 		jwt.StandardClaims{
@@ -84,7 +84,7 @@ func (user *User) Create() map[string]interface{} {
 			Issuer:    "gobucketlistapi",
 		},
 	}
-	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
+	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), claims)
 	tokenString, _ := token.SignedString([]byte(os.Getenv("PASSPHRASE")))
 	user.Token = tokenString
 
@@ -115,8 +115,18 @@ func Login(email, password string) map[string]interface{} {
 	user.Password = ""
 
 	//Create JWT token
-	tk := &Token{UserID: user.ID, Email: email}
-	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
+	expirationTime := time.Now().Add(24 * time.Hour)
+	claims := &Token{
+		user.ID,
+		email,
+		jwt.StandardClaims{
+			Audience:  "devs",
+			IssuedAt:  time.Now().Unix(),
+			ExpiresAt: expirationTime.Unix(),
+			Issuer:    "gobucketlistapi",
+		},
+	}
+	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), claims)
 	tokenString, _ := token.SignedString([]byte(os.Getenv("PASSPHRASE")))
 	user.Token = tokenString //Store the token in the response
 

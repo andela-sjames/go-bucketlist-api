@@ -58,9 +58,9 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 		}
 
 		tokenPart := splitted[1] //Grab the token part, what we are truly interested in
-		tk := &models.Token{}
+		claims := &models.Token{}
 
-		token, err := jwt.ParseWithClaims(tokenPart, tk, func(token *jwt.Token) (interface{}, error) {
+		token, err := jwt.ParseWithClaims(tokenPart, claims, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("PASSPHRASE")), nil
 		})
 
@@ -81,11 +81,11 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 		}
 
 		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
-		fmt.Println("User: ", tk.UserID, tk.Email) //Useful for monitoring
+		fmt.Println("User: ", claims.UserID, claims.Email) //Useful for monitoring
 
 		userClaimContextValue := make(map[string]interface{})
-		userClaimContextValue["userID"] = tk.UserID
-		userClaimContextValue["userEmail"] = tk.Email
+		userClaimContextValue["userID"] = claims.UserID
+		userClaimContextValue["userEmail"] = claims.Email
 
 		reqCtxKey := context.WithValue(r.Context(), CtxKey, userClaimContextValue)
 		next.ServeHTTP(w, r.WithContext(reqCtxKey)) //proceed in the middleware chain!
