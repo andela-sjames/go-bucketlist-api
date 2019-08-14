@@ -73,17 +73,8 @@ func (user *User) Create() map[string]interface{} {
 	}
 
 	//Create new JWT token for the newly registered user
-	expirationTime := time.Now().Add(24 * time.Hour)
-	claims := &Token{
-		user.ID,
-		user.Email,
-		jwt.StandardClaims{
-			Audience:  "devs",
-			IssuedAt:  time.Now().Unix(),
-			ExpiresAt: expirationTime.Unix(),
-			Issuer:    "gobucketlistapi",
-		},
-	}
+	claims := GenerateUserClaims(user.ID, user.Email)
+
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), claims)
 	tokenString, _ := token.SignedString([]byte(os.Getenv("PASSPHRASE")))
 	user.Token = tokenString
