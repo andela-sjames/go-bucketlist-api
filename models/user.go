@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
@@ -72,7 +73,17 @@ func (user *User) Create() map[string]interface{} {
 	}
 
 	//Create new JWT token for the newly registered user
-	tk := &Token{UserID: user.ID}
+	expirationTime := time.Now().Add(24 * time.Hour)
+	tk := &Token{
+		user.ID,
+		user.Email,
+		jwt.StandardClaims{
+			Audience:  "devs",
+			IssuedAt:  time.Now().Unix(),
+			ExpiresAt: expirationTime.Unix(),
+			Issuer:    "gobucketlistapi",
+		},
+	}
 	token := jwt.NewWithClaims(jwt.GetSigningMethod("HS256"), tk)
 	tokenString, _ := token.SignedString([]byte(os.Getenv("PASSPHRASE")))
 	user.Token = tokenString
