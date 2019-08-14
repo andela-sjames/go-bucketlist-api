@@ -12,8 +12,8 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
-// Refresh functioned defined to handle renewal of expired token
-func Refresh(w http.ResponseWriter, r *http.Request) {
+// RefreshHandler functioned defined to handle renewal of expired token
+func RefreshHandler(w http.ResponseWriter, r *http.Request) {
 
 	userObj := r.Context().Value(auth.CtxKey).(map[string]interface{})
 	userID := userObj["userID"].(uint)

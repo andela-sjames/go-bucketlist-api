@@ -26,6 +26,7 @@ func main() {
 	// Define API sub routes
 	userSubRoutes.HandleFunc("/signup", views.CreateUserHandler).Methods("POST")
 	userSubRoutes.HandleFunc("/login", views.AuthenticateHandler).Methods("POST")
+	userSubRoutes.HandleFunc("/refresh", views.RefreshHandler).Methods("GET")
 
 	bucketlistSubRoutes.HandleFunc("/", views.CreateBucketlistHandler).Methods("POST")
 	bucketlistSubRoutes.HandleFunc("/", views.GetAllBucketlistHandler).Methods("GET")
