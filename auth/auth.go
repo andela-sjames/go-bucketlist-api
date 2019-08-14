@@ -48,7 +48,7 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		splitted := strings.Split(tokenHeader, " ") //The token normally comes in format `Bearer {token-body}`, we check if the retrieved token matched this requirement
+		splitted := strings.Split(tokenHeader, " ") // The token normally comes in format `Bearer {token-body}`, we check if the retrieved token matched this requirement
 		if len(splitted) != 2 {
 			response = utils.Message(false, "Invalid/Malformed auth token")
 			w.WriteHeader(http.StatusForbidden)
@@ -57,14 +57,14 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		tokenPart := splitted[1] //Grab the token part, what we are truly interested in
+		tokenPart := splitted[1] // Grab the token part, what we are truly interested in
 		claims := &models.Token{}
 
 		token, err := jwt.ParseWithClaims(tokenPart, claims, func(token *jwt.Token) (interface{}, error) {
 			return []byte(os.Getenv("PASSPHRASE")), nil
 		})
 
-		if err != nil { //Malformed token, returns with http code 403 as usual
+		if err != nil { // Malformed token, returns with http code 403 as usual
 
 			if err == jwt.ErrSignatureInvalid {
 				response = utils.Message(false, "Invalid token signature")
@@ -81,7 +81,7 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		if !token.Valid { //Token is invalid, maybe not signed on this server
+		if !token.Valid { // Token is invalid, maybe not signed on this server
 			response = utils.Message(false, "Token is not valid.")
 			w.WriteHeader(http.StatusUnauthorized)
 			w.Header().Add("Content-Type", "application/json")
@@ -89,14 +89,14 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
-		//Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
-		fmt.Println("User: ", claims.UserID, claims.Email) //Useful for monitoring
+		// Everything went well, proceed with the request and set the caller to the user retrieved from the parsed token
+		fmt.Println("User: ", claims.UserID, claims.Email) // Useful for monitoring
 
 		userClaimContextValue := make(map[string]interface{})
 		userClaimContextValue["userID"] = claims.UserID
 		userClaimContextValue["userEmail"] = claims.Email
 
 		reqCtxKey := context.WithValue(r.Context(), CtxKey, userClaimContextValue)
-		next.ServeHTTP(w, r.WithContext(reqCtxKey)) //proceed in the middleware chain!
+		next.ServeHTTP(w, r.WithContext(reqCtxKey)) // proceed in the middleware chain!
 	})
 }
