@@ -26,8 +26,8 @@ const (
 func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		noAuthRequiredURL := []string{"/", "/api/auth/login", "/api/auth/signup"} //List of endpoints that doesn't require auth
-		requestPath := r.URL.Path                                                 //current request path
+		noAuthRequiredURL := []string{"/", "/api/auth/login", "/api/auth/signup", "/api/auth/refresh"} //List of endpoints that doesn't require auth
+		requestPath := r.URL.Path                                                                      //current request path
 
 		//check if request does not need authentication, serve the request if it doesn't need it
 		for _, value := range noAuthRequiredURL {
@@ -65,8 +65,17 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 		})
 
 		if err != nil { //Malformed token, returns with http code 403 as usual
+
+			if err == jwt.ErrSignatureInvalid {
+				response = utils.Message(false, "Invalid token signature")
+				w.WriteHeader(http.StatusUnauthorized)
+				w.Header().Add("Content-Type", "application/json")
+				utils.Respond(w, response)
+				return
+			}
+
 			response = utils.Message(false, "Malformed authentication token")
-			w.WriteHeader(http.StatusForbidden)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Header().Add("Content-Type", "application/json")
 			utils.Respond(w, response)
 			return
@@ -74,7 +83,7 @@ func JWTAuthenticationMiddleware(next http.Handler) http.Handler {
 
 		if !token.Valid { //Token is invalid, maybe not signed on this server
 			response = utils.Message(false, "Token is not valid.")
-			w.WriteHeader(http.StatusForbidden)
+			w.WriteHeader(http.StatusUnauthorized)
 			w.Header().Add("Content-Type", "application/json")
 			utils.Respond(w, response)
 			return
