@@ -12,7 +12,7 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
-// RefreshHandler functioned defined to handle renewal of expired token
+// RefreshHandler functioned defined to handle renewal of close to expire token
 func RefreshHandler(w http.ResponseWriter, r *http.Request) {
 
 	userObj := r.Context().Value(auth.CtxKey).(map[string]interface{})
