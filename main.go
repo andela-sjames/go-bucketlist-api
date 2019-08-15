@@ -37,8 +37,6 @@ func main() {
 	itemSubRoutes.HandleFunc("/", views.CreateItemHandler).Methods("POST")
 	itemSubRoutes.HandleFunc("/{itemID:[0-9]+}", views.UpdateDeleteItemHandler).Methods("PUT", "DELETE")
 
-	// TODO: Paginate the get routes.
-
 	// server block defined here
 	srv := &http.Server{
 		Handler: router,
