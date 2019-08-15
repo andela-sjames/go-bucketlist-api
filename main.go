@@ -30,7 +30,6 @@ func main() {
 
 	bucketlistSubRoutes.HandleFunc("/", views.CreateBucketlistHandler).Methods("POST")
 	bucketlistSubRoutes.HandleFunc("/", views.GetAllBucketlistHandler).Methods("GET")
-
 	bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.GetBucketByIDlistHandler).Methods("GET")
 	bucketlistSubRoutes.HandleFunc("/{id:[0-9]+}", views.UpdateDeleteBucketByIDlistHandler).Methods("PUT", "DELETE")
 
