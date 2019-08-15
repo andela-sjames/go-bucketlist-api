@@ -65,8 +65,8 @@ PUT api/bucketlists/id/items/item_id | Update a bucket list item
 DELETE api/bucketlists/id/items/item_id | Delete an item in a bucket list
 ```Parameters/Input data: nil```
 
-
 ## WORKFLOW
+
 User registers via ```POST api/auth/register``` route and is given a ```jwt token```
 
 User uses jwt token which expires after a period of 24 hour.
@@ -87,7 +87,10 @@ User can also search for bucketlist using search parameter q.
 
 ### USAGE
 
-Test Api using ```POSTMAN``` or ```cURL```
+Be sure you have docker and docker-compose installed on your machine.
+Run the command `docker-compose up` to spin up the server and navigate the the `localhost:8000/` to view the welcome route.
+
+Test Api using ```POSTMAN```  or ```cURL```
 
 ## TODO
 
