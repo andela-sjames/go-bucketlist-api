@@ -132,7 +132,7 @@ func GetUser(u uint) *User {
 
 // GenerateUserClaims function defined get new claim
 func GenerateUserClaims(user uint, email string) *Token {
-	//Create new JWT token for the newly registered user
+	//Create new JWT token for the newly registered user/returnin users
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Token{
 		user,
