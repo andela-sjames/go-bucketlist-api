@@ -50,8 +50,3 @@ func UpdateBucketItem(id uint, name string, done bool) *BucketlistItem {
 	GetDB().Model(&bucketlistItem).Update(BucketlistItem{Name: name, Done: done})
 	return bucketlistItem
 }
-
-// DeleteBucketItem function defined
-func DeleteBucketItem() {
-
-}
