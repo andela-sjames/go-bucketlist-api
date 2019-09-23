@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 6.3.9
+- name: prometheus
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 9.1.1
+- name: grafana
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 3.8.15
+digest: sha256:1d04499126cbd773ec2377b6d7accfbdb068c310cd54d6f86c6680e4378bc33e
+generated: "2019-09-23T16:01:01.632796+01:00"
