@@ -1,0 +1,7 @@
+name: bucketlist-api
+description: Helm Chart for go-bucketlist-api
+version: 0.0.1
+keywords:
+  - bucketlist
+sources:
+home:
