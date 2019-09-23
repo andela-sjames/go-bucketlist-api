@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "k8bucketapi.fullname" . }}
+  name: {{ include "k8bucketapi.fullname" . }}-server
   labels:
 {{ include "k8bucketapi.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}
+      app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}-server
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}
+        app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}-server
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -21,13 +21,11 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: server
+          image: samuelvarejames/go_bucketlist_api:latest
+          imagePullPolicy: IfNotPresent
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
+            - containerPort: 8000
           livenessProbe:
             httpGet:
               path: /
@@ -36,6 +34,21 @@ spec:
             httpGet:
               path: /
               port: http
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-release-postgresql
+                  key: postgresql-password
+            - name: PGHOST
+              value: "postgres-release-postgresql.default.svc.cluster.local"
+            - name: PGUSER
+              value: postgres
+            - name: PGDBNAME
+              value: postgres
+            - name: PASSPHRASE
+              value: yetanotherbucketlistapp
+        restartPolicy: Always
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
