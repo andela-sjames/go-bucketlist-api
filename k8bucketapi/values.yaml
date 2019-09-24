@@ -20,12 +20,13 @@ ingress:
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: gobucketapi.local
-      paths: []
+      paths:
+        - "/"
 
-  tls: []
-  #  - secretName: gobucketapi-tls
-  #    hosts:
-  #      - gobucketapi.local
+  tls:
+   - secretName: gobucketapi-tls
+     hosts:
+       - gobucketapi.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
