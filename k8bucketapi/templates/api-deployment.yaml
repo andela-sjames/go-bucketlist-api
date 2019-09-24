@@ -38,10 +38,10 @@ spec:
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: jazzed-gerbil-postgresql
+                  name: {{ .Release.Name }}-postgresql
                   key: postgresql-password
             - name: PGHOST
-              value: "jazzed-gerbil-postgresql.default.svc.cluster.local"
+              value: {{ .Release.Name }}-postgresql.default.svc.cluster.local
             - name: PGUSER
               value: postgres
             - name: PGDBNAME
