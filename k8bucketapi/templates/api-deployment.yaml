@@ -48,9 +48,9 @@ spec:
               value: postgres
             - name: PASSPHRASE
               value: yetanotherbucketlistapp
-        restartPolicy: Always
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      restartPolicy: Always
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
