@@ -7,12 +7,10 @@ dependencies:
   - name: prometheus
     version: 9.1.1
     repository:  https://kubernetes-charts.storage.googleapis.com
-    condition: prometheus_values.yaml
     tags:
       - monitoring
   - name: grafana
     version: 3.8.15
     repository:  https://kubernetes-charts.storage.googleapis.com
-    condition: graphana_values.yaml
     tags:
       - monitoring

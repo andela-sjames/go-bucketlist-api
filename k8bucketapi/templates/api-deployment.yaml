@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "k8bucketapi.fullname" . }}-server
+  name: {{ include "k8bucketapi.fullname" . }}
   labels:
 {{ include "k8bucketapi.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}-server
+      app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}-server
+        app.kubernetes.io/name: {{ include "k8bucketapi.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
     spec:
     {{- with .Values.imagePullSecrets }}
@@ -38,10 +38,10 @@ spec:
             - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: postgres-release-postgresql
+                  name: jazzed-gerbil-postgresql
                   key: postgresql-password
             - name: PGHOST
-              value: "postgres-release-postgresql.default.svc.cluster.local"
+              value: "jazzed-gerbil-postgresql.default.svc.cluster.local"
             - name: PGUSER
               value: postgres
             - name: PGDBNAME

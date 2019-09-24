@@ -1,5 +1,0 @@
-server:
-  ingress:
-    enabled: false
-  service:
-    type: ClusterIP
