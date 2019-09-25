@@ -21,7 +21,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       containers:
-        - name: server
+        - name: {{ include "k8bucketapi.fullname" . }}
           image: samuelvarejames/go_bucketlist_api:latest
           imagePullPolicy: IfNotPresent
           ports:
@@ -29,11 +29,11 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: http
+              port: 8000
           readinessProbe:
             httpGet:
               path: /
-              port: http
+              port: 8000
           env:
             - name: PGPASSWORD
               valueFrom:
