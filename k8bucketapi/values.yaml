@@ -13,6 +13,9 @@ service:
   type: NodePort
   port: 80
 
+k8application:
+  serverPort: 8000
+
 ingress:
   enabled: true
   annotations:

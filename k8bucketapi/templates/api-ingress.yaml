@@ -30,7 +30,7 @@ spec:
           - path: {{ . }}
             backend:
               serviceName: {{ $fullName }}
-              servicePort: 8000
+              servicePort: {{ .Values.k8application.serverPort }}
         {{- end }}
   {{- end }}
 {{- end }}
