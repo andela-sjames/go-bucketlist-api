@@ -25,14 +25,15 @@ spec:
           image: samuelvarejames/go_bucketlist_api:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: {{ .Values.k8application.serverPort }}
+            - containerPort: 8000
+          livenessProbe:
             httpGet:
               path: /
-              port: {{ .Values.k8application.serverPort }}
+              port: 8000
           readinessProbe:
             httpGet:
               path: /
-              port: {{ .Values.k8application.serverPort }}
+              port: 8000
           env:
             - name: PGPASSWORD
               valueFrom:
