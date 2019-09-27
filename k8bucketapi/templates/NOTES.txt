@@ -1,6 +1,6 @@
 1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
-  i.  Update our /etc/hosts file to route requests:
+  i.  Update your /etc/hosts file to route requests:
       echo "$(minikube ip) gobucketapi.local prometheus.local graphana.local" | sudo tee -a /etc/hosts
 
   ii. Visit the URLs below:

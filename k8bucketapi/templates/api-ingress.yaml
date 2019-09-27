@@ -29,18 +29,4 @@ spec:
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8000
-    - host: prometheus.local
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: {{ .Release.Name }}-prometheus-server
-              servicePort: 9090
-    - host: graphana.local
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: {{ .Release.Name }}-grafana
-              servicePort: 3000
 {{- end }}

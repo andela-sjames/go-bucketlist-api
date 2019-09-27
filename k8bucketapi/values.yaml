@@ -61,9 +61,21 @@ prometheus:
     global:
       scrape_interval: 30s
       scrape_timeout: 30s
-  
+
+    ingress:
+      enabled: enable
+
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+    
+      hosts:
+        - prometheus.local
+
     service:
       type: NodePort
+    
+    networking:
+      - IngressRule: backend
 
   ## Prometheus server ConfigMap entries
   serverFiles:
@@ -192,8 +204,15 @@ prometheus:
             target_label: kubernetes_name
 
 grafana:
-  server:
-    ingress:
-      enabled: false
-    service:
-      type: NodePort
+  service:
+    type: NodePort
+
+  ingress:
+    enabled: true
+
+    annotations:
+      nginx.ingress.kubernetes.io/rewrite-target: /
+
+    path: /
+    hosts:
+      - grafana.local
