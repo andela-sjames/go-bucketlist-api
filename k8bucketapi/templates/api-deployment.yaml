@@ -22,7 +22,7 @@ spec:
     {{- end }}
       containers:
         - name: {{ include "k8bucketapi.fullname" . }}
-          image: samuelvarejames/go_bucketlist_api:latest
+          image: samuelvarejames/go_bucketlist_api:2.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000

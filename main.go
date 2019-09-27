@@ -24,7 +24,7 @@ func main() {
 	router.HandleFunc("/", views.HomeHandler)
 
 	// Metrics Route Handlers /metrics/ Endpoints
-	router.HandleFunc("/metrics", views.MetricsHandler)
+	router.HandleFunc("/metrics/", views.MetricsHandler)
 
 	// Define API sub routes
 	userSubRoutes.HandleFunc("/signup", views.CreateUserHandler).Methods("POST")

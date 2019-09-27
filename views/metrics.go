@@ -31,6 +31,6 @@ func init() {
 }
 
 // MetricsHandler defined for collecting application metrics
-func MetricsHandler(w http.ResponseWriter, r *http.Request, s string) {
+func MetricsHandler(w http.ResponseWriter, r *http.Request) {
 	promhttp.Handler().ServeHTTP(w, r)
 }
