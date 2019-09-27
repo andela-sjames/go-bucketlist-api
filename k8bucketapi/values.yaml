@@ -73,10 +73,10 @@ prometheus:
         - /ect/config/alerts
 
       scrape_configs:
-      # - job_name: 'kube-k8bucketapi'
-      #   static_configs:
-      #   - targets:
-      #     - server.default.svc.cluster.local:8000
+      - job_name: 'kube-k8bucketapi'
+        static_configs:
+        - targets:
+          - api-release-k8bucketapi.default.svc.cluster.local:8000
 
       - job_name: 'kube-kubelet'
         honor_labels: false

@@ -11,6 +11,7 @@ require (
 	github.com/joho/godotenv v1.3.0
 	github.com/lib/pq v1.2.0
 	github.com/pborman/uuid v1.2.0
+	github.com/prometheus/client_golang v0.9.3-0.20190127221311-3c4408c8b829
 	github.com/ulule/paging v0.3.0
 	golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
 )
