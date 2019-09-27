@@ -25,7 +25,7 @@ spec:
     - host: gobucketapi.local
       http:
         paths:
-          - path: "/"
+          - path: /
             backend:
               serviceName: {{ $fullName }}
               servicePort: 8000
