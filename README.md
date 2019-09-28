@@ -97,3 +97,7 @@ Test Api using ```POSTMAN```  or ```cURL```
 - Paginate GetAllBucketlistHandler
 - Paginate GetBucketByIDlistHandler items
 - Document API
+
+## Deploy to Kubernetes using minikube?
+
+k8bucketapi folder reference: [README.md](README.md)
