@@ -1,45 +1,87 @@
 # Using Kubernetes and Minikube
 
-1. start minikube
+1.start minikube
+
+```shell
 minikube start
+```
 
-2. Enable the ingress add-on for Minikube.
+2.Enable the ingress add-on for Minikube
+
+```shell
 minikube addons enable ingress
+```
 
-3. Create a ServiceAccount and associate it with the ClusterRole, use a ClusterRoleBinding
+3.Create a ServiceAccount and associate it with the ClusterRole, use a ClusterRoleBinding
+
+```shell
 kubectl create serviceaccount -n kube-system tiller
 kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+```
 
-4. Initialize Helm
+4.Initialize Helm
+
+```shell
 helm init --history-max 200 --service-account tiller
+```
 
-5. Confirm tiller works
+5.Confirm tiller works
+
+```shell
 kubectl --namespace kube-system get pods | grep tiller
+```
 
-6. Bind the prometheus service account
+6.Bind the prometheus service account
+
+```shell
 kubectl apply -f crbinding.yaml
+```
 
-7. Validate chart template ###
-helm template k8bucketapi || helm lint k8bucketapi (Chart)
+7.Validate chart template ###
 
-8. Do a dry run
+```shell
+helm template k8bucketapi
+```
+
+OR
+
+```shell
+helm lint k8bucketapi (Chart)
+```
+
+8.Do a dry run
+
+```shell
 helm install --name api-release --dry-run --debug k8bucketapi
+```
 
-9. Install helm chart
+9.Install helm chart
+
+```shell
 helm install --name api-release k8bucketapi
+```
 
-10. Visit a service
+10.Visit a service
+
+```shell
 minikube service api-release-k8bucketapi --url
 minikube service api-release-prometheus-server --url
 minikube service api-release-grafana --url
+```
 
-11. Describe the ingress (k8bucketapi, prometheus-server, grafana)
+11.Describe the ingress (k8bucketapi, prometheus-server, grafana)
+
+```shell
 kubectl describe ing api-release-k8bucketapi
 kubectl describe ing api-release-prometheus-server
 kubectl describe ing api-release-grafana
+```
 
-12. Update our /etc/hosts file to route requests
+12.Update our /etc/hosts file to route requests
+
+```shell
 echo "$(minikube ip) gobucketapi.local monitoring.local" | sudo tee -a /etc/hosts
+```
 
 ## upgrade chart
 
@@ -47,4 +89,4 @@ helm upgrade api-release k8bucketapi
 
 ## delete api-release
 
-helm del --purge api-release 
+helm del --purge api-release
