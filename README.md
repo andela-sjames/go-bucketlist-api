@@ -100,4 +100,4 @@ Test Api using ```POSTMAN```  or ```cURL```
 
 ## Deploy to Kubernetes using minikube
 
-k8bucketapi folder reference: [README.md](K8bucketapi/README.md)
+k8bucketapi folder reference: [README.md](k8bucketapi/README.md)
