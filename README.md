@@ -100,4 +100,5 @@ Test Api using ```POSTMAN```  or ```cURL```
 
 ## Deploy to Kubernetes using minikube
 
-k8bucketapi folder reference: [README.md](k8bucketapi/README.md)
+k8bucketapi folder reference: [README.md](https://github.com/andela-sjames/go-bucketlist-api/blob/master/K8bucketapi/README.md
+)
