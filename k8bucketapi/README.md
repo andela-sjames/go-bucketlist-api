@@ -77,7 +77,7 @@ kubectl describe ing api-release-prometheus-server
 kubectl describe ing api-release-grafana
 ```
 
-12.Update our /etc/hosts file to route requests
+12.Update your /etc/hosts file to route requests
 
 ```shell
 echo "$(minikube ip) gobucketapi.local monitoring.local" | sudo tee -a /etc/hosts
