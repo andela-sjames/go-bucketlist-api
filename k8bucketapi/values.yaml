@@ -86,7 +86,7 @@ prometheus:
       - job_name: 'kube-k8bucketapi'
         static_configs:
         - targets:
-          - api-release-k8bucketapi.default.svc.cluster.local:8000
+          - api.local
 
       - job_name: 'kube-kubelet'
         honor_labels: false

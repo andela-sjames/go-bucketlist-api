@@ -1,10 +1,10 @@
 1. Get the application URL by running these commands:
 {{- if .Values.ingress.enabled }}
   i.  Update your /etc/hosts file to route requests:
-      echo "$(minikube ip) gobucketapi.local prometheus.local grafana.local" | sudo tee -a /etc/hosts
+      echo "$(minikube ip) api.local prometheus.local grafana.local" | sudo tee -a /etc/hosts 
 
   ii. Visit the URLs below:
-      http://gobucketapi.local
+      http://api.local
       http://prometheus.local
       http://grafana.local
 {{- else if contains "NodePort" .Values.service.type }}
