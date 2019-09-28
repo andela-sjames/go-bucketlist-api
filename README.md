@@ -98,6 +98,6 @@ Test Api using ```POSTMAN```  or ```cURL```
 - Paginate GetBucketByIDlistHandler items
 - Document API
 
-## Deploy to Kubernetes using minikube?
+## Deploy to Kubernetes using minikube
 
-k8bucketapi folder reference: [README.md](README.md)
+k8bucketapi folder reference: [README.md](K8bucketapi/README.md)
