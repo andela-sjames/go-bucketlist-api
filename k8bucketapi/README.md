@@ -83,6 +83,14 @@ kubectl describe ing api-release-grafana
 echo "$(minikube ip) gobucketapi.local monitoring.local" | sudo tee -a /etc/hosts
 ```
 
+13.Visit the urls to see the services running
+
+```text
+http://api.local
+http://prometheus.local
+http://grafana.local
+```
+
 ## upgrade chart
 
 helm upgrade api-release k8bucketapi
