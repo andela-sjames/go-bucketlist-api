@@ -1,5 +1,11 @@
 # Using Kubernetes and Minikube
 
+For Local Use:
+
+--------------
+
+## The current steps below applies
+
 1.start minikube
 
 ```shell
@@ -91,10 +97,34 @@ http://prometheus.local
 http://grafana.local
 ```
 
-## upgrade chart
+## Upgrade chart
 
+```shell
 helm upgrade api-release k8bucketapi
+```
 
-## delete api-release
+## Delete api-release
 
+```shell
 helm del --purge api-release
+```
+
+For Production Use
+
+-------------------;
+
+### All the steps above applies with the exception of the nginx-ingress-controller
+
+Replace the steps above with this
+
+2.create the “mandatory” resources for Nginx Ingress in your cluster.
+
+```shell
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+```
+
+2a. create the ingress-nginx ingress controller service
+
+```shell
+kubectl apply -f cloud-generic.yaml
+```
