@@ -117,13 +117,13 @@ For Production Use
 
 Replace the steps above with this
 
-2.create the “mandatory” resources for Nginx Ingress in your cluster.
+2a.create the “mandatory” resources for Nginx Ingress in your cluster.
 
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
 ```
 
-2a. create the ingress-nginx ingress controller service
+2b. create the ingress-nginx ingress controller service
 
 ```shell
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.24.1/deploy/provider/cloud-generic.yaml
