@@ -36,8 +36,8 @@ func GetAllBucketlist(user uint) []*Bucketlist {
 	bucketlists := make([]*Bucketlist, 0)
 	err := GetDB().Table("bucketlists").Where("user_id = ?", user).Find(&bucketlists).Error
 	if err != nil {
-		fmt.Println(err)
 		metrics.DbRequestsCurrent.Inc()
+		fmt.Println(err)
 		return nil
 	}
 	return bucketlists
