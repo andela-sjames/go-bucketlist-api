@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 
+	"github.com/andela-sjames/go-bucketlist-api/metrics"
 	"github.com/andela-sjames/go-bucketlist-api/utils"
 	"github.com/jinzhu/gorm"
 )
@@ -36,6 +37,7 @@ func GetAllBucketlist(user uint) []*Bucketlist {
 	err := GetDB().Table("bucketlists").Where("user_id = ?", user).Find(&bucketlists).Error
 	if err != nil {
 		fmt.Println(err)
+		metrics.DbRequestsCurrent.Inc()
 		return nil
 	}
 	return bucketlists

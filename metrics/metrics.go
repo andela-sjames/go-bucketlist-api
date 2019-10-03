@@ -1,4 +1,4 @@
-package views
+package metrics
 
 import (
 	"net/http"
@@ -8,26 +8,26 @@ import (
 )
 
 var (
-	dbRequestsDuration = prometheus.NewHistogram(prometheus.HistogramOpts{
+	DbRequestsDuration = prometheus.NewHistogram(prometheus.HistogramOpts{
 		Name: "Db_request_duration_seconds",
 		Help: "The duration of the requests to the DB service.",
 	})
 
-	dbRequestsCurrent = prometheus.NewGauge(prometheus.GaugeOpts{
+	DbRequestsCurrent = prometheus.NewGauge(prometheus.GaugeOpts{
 		Name: "Db_requests_current",
 		Help: "The current number of requests to the DB service.",
 	})
 
-	dbClientErrors = prometheus.NewCounter(prometheus.CounterOpts{
+	DbClientErrors = prometheus.NewCounter(prometheus.CounterOpts{
 		Name: "Db_errors",
 		Help: "The total number of DB client errors",
 	})
 )
 
 func init() {
-	prometheus.MustRegister(dbRequestsDuration)
-	prometheus.MustRegister(dbClientErrors)
-	prometheus.MustRegister(dbRequestsCurrent)
+	prometheus.MustRegister(DbRequestsDuration)
+	prometheus.MustRegister(DbClientErrors)
+	prometheus.MustRegister(DbRequestsCurrent)
 }
 
 // MetricsHandler defined for collecting application metrics

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/andela-sjames/go-bucketlist-api/auth"
+	"github.com/andela-sjames/go-bucketlist-api/metrics"
 	"github.com/andela-sjames/go-bucketlist-api/views"
 	"github.com/gorilla/mux"
 )
@@ -24,7 +25,7 @@ func main() {
 	router.HandleFunc("/", views.HomeHandler)
 
 	// Metrics Route Handlers /metrics/ Endpoints
-	router.HandleFunc("/metrics", views.MetricsHandler)
+	router.HandleFunc("/metrics", metrics.MetricsHandler)
 
 	// Define API sub routes
 	userSubRoutes.HandleFunc("/signup", views.CreateUserHandler).Methods("POST")
