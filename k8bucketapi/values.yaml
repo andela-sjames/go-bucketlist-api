@@ -214,3 +214,6 @@ grafana:
     path: /
     hosts:
       - grafana.local
+
+    adminUser: admin
+    adminPassword: admin
